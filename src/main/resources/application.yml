@@ -1,0 +1,45 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: dianping
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.31.20:3306/test?useSSL=false&serverTimezone=UTC
+    username: "root"
+    password: "123456"
+  jackson:
+    default-property-inclusion: non_null
+  data:
+    redis:
+      host: 192.168.31.20
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 10
+          min-idle: 1
+          time-between-eviction-runs: 10s
+  
+  pulsar:
+    client:
+      serviceUrl: "pulsar://192.168.31.20:6650"
+    defaults:
+      type-mappings:
+        - message-type: org.example.dianping.entity.VoucherMsg
+          schema-info:
+            schema-type: JSON
+  threads:
+    virtual:
+      enabled: true
+mybatis-plus:
+  type-aliases-package: org.example.dianping.entity # 别名扫描包
+  configuration:
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+
+logging:
+  file:
+    name: logs/dianping.log
+  level:
+    root: debug
+  config: classpath:logback-spring.xml
